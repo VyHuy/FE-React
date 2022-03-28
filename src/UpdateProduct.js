@@ -33,10 +33,15 @@ function UpdateProduct() {
       //   'Accept': 'application/json',
       //   'Content-type': 'application/json',
       // },
+    }).then((res) => res.json())
+    .then((json) => {
+      if (json.status == 200) {
+        navigate("/");
+      } else {
+        console.log("Error", json);
+      }
     });
-    navigate("/");
   }
-
   return (
     <div>
       <div className="container">

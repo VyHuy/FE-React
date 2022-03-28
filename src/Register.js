@@ -9,21 +9,21 @@ function Register() {
   async function signUp() {
     let item = { name, password, email, confirmPass };
     // console.log(item);
-
-    let result = await fetch(`http://localhost:8000/api/register`, {
+    fetch(`http://localhost:8000/api/register`, {
       method: "POST",
       body: JSON.stringify(item),
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
       },
-    })
-      .then((response) => console.log(JSON.stringify(response)))
-      .catch((error) => console.error("Error:", error));
-    // result = await result.json();
-    // localStorage.setItem("user-info", JSON.stringify(result ))
-    // console.log("result", result);
-    navigate("/login");
+    }).then((res) => res.json())
+    .then((json) => {
+      if (json.status == 200) {
+        navigate("/login");
+      } else {
+        console.log("Error", json);
+      }
+    });
   }
   return (
     <div>

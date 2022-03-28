@@ -14,13 +14,20 @@ function AddProduct() {
     formData.append('title', title)
     formData.append('description', description)
     formData.append('price', price)
-
     
-    let result = await fetch(`http://localhost:8000/api/addProduct`, {
+    fetch(`http://localhost:8000/api/addProduct`, {
+      
       method: "POST",
       body: formData,
-    });
+      
+    }).then((res) => res.json())
+    .then((json) => {
+      if (json.status == 200) {
         navigate("/");
+      } else {
+        console.log("Error", json);
+      }
+    });
   }
 
   return (

@@ -2,27 +2,27 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 function Login() {
   const navigate = useNavigate();
-
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
   async function signIn() {
     let item = { password, email };
-    // console.log(item);
-    let result = await fetch(`http://localhost:8000/api/login`, {
+    fetch(`http://localhost:8000/api/login`, {
       method: "POST",
       body: JSON.stringify(item),
       headers: {
-        "Content-Type":
-          "application/x-www-form-urlencoded; charset=UTF-8;application/json",
+        "Content-Type": "application/json",
         Accept: "application/json",
       },
     })
-      .then((response) => console.log(JSON.stringify(response)))
-      .catch((error) => console.error("Error:", error));
-    // result = await result.json();
-    navigate("/");
-    // console.log("result", result);
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.status == 200) {
+          navigate("/");
+        } else {
+          console.log("Error", json);
+        }
+      });
   }
   return (
     <div>
